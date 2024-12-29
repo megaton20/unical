@@ -1,0 +1,35 @@
+<div class="row">
+  <% if (contestants.length === 0) { %>
+    <div class="col-12 text-center">
+      <p class="alert alert-warning">No contestants have been added by the admin yet.</p>
+    </div>
+  <% } else { %>
+    <% contestants.forEach((data) => { %>
+      <div class="col-md-3 mb-4">
+        <a href="/contestants/<%= data.id %>/vote">
+          <div class="card contender" data-id="<%= data.id %>" data-aos="fade-up" data-aos-delay="100">
+            <div class="user-images">
+              <div class="image-gallery">
+                <img src="/uploads/<%= data.photo_url %>" class="card-img-top" alt="<%= data.fname %> <%= data.lname %>">
+              </div>
+            </div>
+            <div class="card-body text-center">
+              <p class="card-text m-0">
+                <strong id="voteCount-<%= data.id %>">
+                  <%= data.fname %> <%= data.lname %>
+                </strong>
+              </p>
+              <% if (data.vote_count === 0) { %>
+                <p class="card-text text-warning">No votes yet</p>
+              <% } else { %>
+                <p class="card-text text-success">
+                  Votes: <strong id="voteCount-<%= data.id %>"><%= data.vote_count %></strong>
+                </p>
+              <% } %>
+            </div>
+          </div>
+        </a>
+      </div>
+    <% }) %>
+  <% } %>
+</div>

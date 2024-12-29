@@ -1,0 +1,175 @@
+
+ 
+
+  <%- include('./partials/nav') %>
+
+
+  <div class="container">
+    <%- include('./partials/messages') %>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    
+    <div class="row">
+      <div class="col-md-6">
+        <div class="contender">
+          <div class="user-images">
+            <img src="<%= contestants.photo_url %>" class="img-fluid" alt="<%= contestants.fname %> <%= contestants.lname %>">
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-4">
+        <div class="text-center">
+
+          <div class="user-actions mb-3 mt-3">
+            <% if (contestants.status !== "evicted") { %>
+              <button class="btn btn-outline-danger decreaseVotes">-</button>
+              <span class="mx-2 voteNumber" id="voteNumber">1</span>
+              <button class="btn btn-outline-success increaseVotes">+</button>
+            <% } else { %>
+              <p class="btn btn-danger w-100">
+                <i class="bi bi-exclamation-triangle-fill"></i> Evicted
+              </p>
+            <% } %>
+          </div>
+
+          <% if (contestants.status !== "evicted") { %>
+            <form class="paymentForm" id="paymentForm">
+              <input type="number" name="amount" id="amount" value="100" hidden>
+              <button type="submit" class="btn btn-success w-100">
+                Pay ₦<span id="paymentAmount">100</span>
+              </button>
+            </form>
+          <% } %>
+
+            <div class="card p-3 border-warning bg-transparent mt-5">
+              <p style="font-size: 14px;" class="text-warning mt-3">Tracking id is created for every time vote is initaited</p>
+
+            </div>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+        </div>
+      </div>
+    </div>
+    
+    <br>
+    <br>
+    <!-- Account Details Modal -->
+    <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h6 class="modal-title" id="detailsModalLabel">Vote Summary</h6>
+
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+                <div class="modal-body">
+          <p style="font-size: 13px;" class="text-danger text-uppercase">Do not pay without including tracking ID IN THE REFERENCE (remark)</p>
+          <div class="card p-3 mt-0">
+
+              <p><strong>Account Name: </strong>Ettano Blessing</p>
+              <p><strong>Account Number: </strong> 8137184569</p>
+              <p><strong>Bank Name: </strong> PalmPay</p>
+              <p><strong class="text-danger">Tracking ID:</strong> <span id="modalPaymentUinqueId">null</span></p>
+              <hr>
+              <p><strong>Voting For:</strong> <%= contestants.fname %> <%= contestants.lname %></p>
+              <p><strong>Number of Votes:</strong> <span id="modalVoteCount">1</span></p>
+              <p><strong>Amount to Pay: ₦<span id="modalPaymentAmount">100</span></strong></p>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel session</button>
+            <button type="button" class="btn btn-success" id="proceedToReceiptBtn">I have made payment</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Receipt Modal -->
+    <div class="modal fade" id="receiptModal" tabindex="-1" aria-labelledby="receiptModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="receiptModalLabel">Upload Receipt</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form  action="/vote/upload-receipt" method="post" enctype="multipart/form-data">
+              <div class="mb-3">
+                <input type="text" class="form-control" id="fname" name="fname" placeholder="First name" required>
+              </div>
+              <div class="mb-3">
+                <input type="text" class="form-control" id="lname" name="lname" placeholder="Last name" required>
+              </div>
+              <input type="text" id="trackingId" name="trackingId" hidden>
+              <input type="text" id="amountGenerated" name="amount" hidden>
+              <input type="text" id="contestantID" name="contestantID" value="<%= contestants.id %>" hidden>
+              <input type="text" id="voteSum" name="voteSum" hidden>
+              <div class="mb-3">
+                <input type="file" class="form-control" id="receiptFile" name="receipt" required>
+              </div>
+              <button type="submit" class="btn btn-success">Submit Receipt</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const votePrice = 100;
+    let currentVotes = 1;
+
+    let expectedAmount = 100
+
+
+    function updateVoteAndPrice() {
+      const paymentAmount = currentVotes * votePrice;
+      document.getElementById('voteNumber').textContent = currentVotes;
+      document.getElementById('paymentAmount').textContent = paymentAmount;
+      document.getElementById('amount').value = paymentAmount;
+
+      document.getElementById('modalPaymentAmount').textContent = paymentAmount;
+      document.getElementById('modalVoteCount').textContent = currentVotes;
+
+      expectedAmount = paymentAmount
+    }
+
+    document.querySelector('.increaseVotes').addEventListener('click', () => {
+      currentVotes++;
+      updateVoteAndPrice();
+    });
+
+    document.querySelector('.decreaseVotes').addEventListener('click', () => {
+      if (currentVotes > 1) {
+        currentVotes--;
+        updateVoteAndPrice();
+      }
+    });
+
+    document.getElementById('paymentForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const trackingId = Math.random().toString(36).substr(2, 8).toUpperCase();
+      document.getElementById('modalPaymentUinqueId').textContent = trackingId;
+      document.getElementById('trackingId').value = trackingId;
+      
+      
+      document.getElementById('voteSum').value = currentVotes;
+      document.getElementById('amountGenerated').value = expectedAmount;
+      
+      $('#detailsModal').modal('show');
+    });
+
+    document.getElementById('proceedToReceiptBtn').addEventListener('click', function () {
+      $('#detailsModal').modal('hide');
+      $('#receiptModal').modal('show');
+    });
+  </script>

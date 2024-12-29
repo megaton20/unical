@@ -1,0 +1,73 @@
+<%- include('./partials/nav') %>
+
+
+
+<div class=" mb-2">
+    <div class="page-header">
+
+            <div class=" text-center ">
+                <h4 class="display-4">Vote Ranking</h4>
+                <p ><a href="/">home</a>/Standings</p>
+            </div>
+        </div>  
+        
+</div>
+
+<!-- <div class="">
+    <div class="alert alert-warning d-flex align-items-center" role="alert">
+        <i class="bi bi-exclamation-triangle-fill me-2" style="font-size: 1.5rem;"></i> 
+        <div>
+            Eviction takes place tomorrow, Sunday, 13th of October 2024, and points below 200. We will be evicted from the contest.
+        </div>
+    </div>
+</div> -->
+
+<div class="container">
+              <div class="table-responsive">
+                <table class="table table-striped" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Name</th>
+                          <th>Total Vote</th>
+                          <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% standings.forEach(function(data, index) { %>
+                            <tr data-aos="fade-up" data-aos-delay="100">
+                                <td><%= index + 1 %></td>
+                                <td><%= data['fname'] %> <%= data['lname'] %></td>
+                               <!-- Votes -->
+                            <td class="<%= data['vote_count'] < 30 ? 'text-danger' : data['vote_count'] < 50 ? 'text-warning' : 'text-success' %>">
+                                <%= data['vote_count'] %>
+                            </td>
+                            <td class="<%= data['status'] === 'eviction' ? 'text-danger' : 'text-success' %>">
+                                <i class="<%= data['status'] === 'eviction' ? 'fas fa-times-circle' : 'fas fa-check-circle' %>"></i>
+                              </td>
+                            </tr> 
+                        <% }) %>
+                    </tbody>
+                  </table>
+              </div>
+
+
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<%- include('./partials/footer') %>
+
+<!-- Link to Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<!-- Link to Local Bootstrap JS -->
+<script src="/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
+

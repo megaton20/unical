@@ -1,0 +1,35 @@
+
+
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,               -- Auto-incrementing primary key in PostgreSQL
+    email VARCHAR(255) NOT NULL UNIQUE,  -- User email, must be unique
+    password VARCHAR(255) NOT NULL,      -- User password, stored as hashed
+    user_role VARCHAR(50) DEFAULT 'user',-- User role, defaults to 'user'
+);
+
+CREATE TABLE "contestants" (
+  "id" SERIAL PRIMARY KEY,
+  "fname" VARCHAR(255) NOT NULL,
+  "lname" VARCHAR(255) NOT NULL,
+  "status" VARCHAR(20) NOT NULL,
+  "vote_count" INT DEFAULT 0,
+  "photo_url"VARCHAR(255) NOT NULL,
+  "bio" VARCHAR(255) NULL
+);
+
+CREATE TABLE "votesClaims" (
+  "id" SERIAL PRIMARY KEY,
+  "uuid" VARCHAR(255) NOT NULL,
+  "fname" VARCHAR(20) NOT NULL,
+  "lname" VARCHAR(20) NOT NULL,
+  "status"VARCHAR(255) NOT NULL,
+  "uploaded_receipt" BOOLEAN DEFAULT TRUE,
+  "uploaded_receipt_file" VARCHAR(255) NOT NULL,
+  "is_approved" BOOLEAN DEFAULT FALSE,
+  "contestant_id" INT,
+  amount_paid INT,
+  vote_count INT
+);
+
+INSERT INTO contestants ( fname, lname, status, photo_url)
+VALUES ('ff', 'ryehr', 'active', '/contestants/3.jpg');

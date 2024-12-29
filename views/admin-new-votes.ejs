@@ -1,0 +1,44 @@
+
+<%- include('./partials/admin-nav') %>
+
+
+  <!-- Admin Panel Content -->
+  <div class="container-fluid p-4">
+    <%- include('./partials/messages') %>
+
+    <p class="text-uppercase text-success"> new votes table</p>
+<!-- system votes -->
+      <div class="table-responsive">
+        <table class="table table-striped" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>tracking id</th>
+                  <th>action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% votesClaims.forEach(function(data, index) { %>
+                    <tr data-aos="fade-up" data-aos-delay="100">
+                        <td><%= index + 1 %></td>
+                        <td><%= data['fname'] %> <%= data['lname'] %></td>
+
+                        <td><%= data['uuid']%></td>
+                      <td>
+                        <a href="/admin/view-vote/<%= data['id']%>" class="btn btn-outline-primary">view</a>
+                      </td>
+                    </tr> 
+                <% }) %>
+            </tbody>
+          </table>
+      </div>
+
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Display current date
+    document.getElementById('currentDate').innerText = new Date().toLocaleDateString();
+  </script>

@@ -1,0 +1,88 @@
+<!-- Transparent Navbar -->
+<nav id="navbar" class="navbar navbar-expand-lg navbar-light fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="/"><img src="/img/logo.png" alt=""></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar items visible on larger screens -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link  " aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="/contestants">Contestants</a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link " href="/prizes">prizes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="/standing">Standing</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="/contact">Contact us</a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- Offcanvas Navbar for smaller screens -->
+<div class="offcanvas offcanvas-start offcanvas-lg" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+  <div class="offcanvas-header">
+    <button type="button" class="btn-close text-light" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <ul class="navbar-nav flex-column">
+      <li class="nav-item">
+          <a class="nav-link text-dark" aria-current="page" href="/">
+              <i class="fas fa-home"></i> Home
+          </a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link text-dark" href="/contestants">
+              <i class="fas fa-users"></i> Contestants
+          </a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link text-dark" href="/prizes">
+              <i class="fas fa-gift"></i> Prizes
+          </a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link text-dark" href="/standing">
+              <i class="fas fa-trophy"></i> Standing
+          </a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link text-dark" href="/contact">
+              <i class="fas fa-envelope"></i> Contact Us
+          </a>
+      </li>
+  </ul>
+  
+  </div>
+</div>
+
+<style>
+/* Sidebar: Make it fixed and give it a full height */
+.offcanvas-start {
+  width: 250px; 
+  height: 100vh; 
+  top: 0; 
+  left: 0; 
+  /* background-color: #000;  */
+  /* color: #fff !important; */
+}
+
+.offcanvas-body {
+  /* background-color: #000; */
+  display: flex;
+  flex-direction: column; 
+  padding-top: 1rem;
+}
+
+</style>
